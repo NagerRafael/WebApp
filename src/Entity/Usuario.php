@@ -3,15 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Usuario
  *
- * @ORM\Table(name="Usuario")
- * @ORM\Entity
+ * @ORM\Table(name="usuario")
  * @ORM\Entity(repositoryClass="App\Repository\UsuarioRepository")
  */
-class Usuario
+class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @var int
@@ -113,30 +113,6 @@ class Usuario
         return $this;
     }
 
-    public function getClave(): ?string
-    {
-        return $this->clave;
-    }
-
-    public function setClave(string $clave): self
-    {
-        $this->clave = $clave;
-
-        return $this;
-    }
-
-    public function getRoles(): array
-    {
-        return $this->roles;
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
     public function getTipo(): ?string
     {
         return $this->tipo;
@@ -161,5 +137,70 @@ class Usuario
         return $this;
     }
 
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->clave;
+    }
+
+    public function setPassword(string $clave): self
+    {
+        $this->clave = $clave;
+
+        return $this;
+    }
+
+
+    /**
+     * The public representation of the user (e.g. a username, an email address, etc.)
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->correo;
+    }
+
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function __toString()
+    {
+        return $this->getUserIdentifier();
+    }
 
 }
