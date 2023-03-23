@@ -46,7 +46,7 @@ class Factura
     private $estado;
 
     /**
-     * @var \Articulo
+     * @var \App\Entity\Articulo
      *
      * @ORM\ManyToOne(targetEntity="Articulo")
      * @ORM\JoinColumns({
@@ -56,7 +56,7 @@ class Factura
     private $idArticulo;
 
     /**
-     * @var \Usuario
+     * @var \App\Entity\Usuario
      *
      * @ORM\ManyToOne(targetEntity="Usuario")
      * @ORM\JoinColumns({
