@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,6 +64,71 @@ class Factura
      * })
      */
     private $idUsuario;
+
+    public function getIdFactura(): ?int
+    {
+        return $this->idFactura;
+    }
+
+    public function getFecha(): ?\DateTimeInterface
+    {
+        return $this->fecha;
+    }
+
+    public function setFecha(\DateTimeInterface $fecha): self
+    {
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    public function getTotal(): ?string
+    {
+        return $this->total;
+    }
+
+    public function setTotal(?string $total): self
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    public function getEstado(): ?string
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(?string $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getIdArticulo(): ?Articulo
+    {
+        return $this->idArticulo;
+    }
+
+    public function setIdArticulo(?Articulo $idArticulo): self
+    {
+        $this->idArticulo = $idArticulo;
+
+        return $this;
+    }
+
+    public function getIdUsuario(): ?Usuario
+    {
+        return $this->idUsuario;
+    }
+
+    public function setIdUsuario(?Usuario $idUsuario): self
+    {
+        $this->idUsuario = $idUsuario;
+
+        return $this;
+    }
 
 
 }
